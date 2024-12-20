@@ -1,3 +1,5 @@
+package com.jeu;
+
 public class Salle {
     private int evenement; // 0: vide, 1: monstre, 2: trésor
 

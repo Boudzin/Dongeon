@@ -1,3 +1,5 @@
+package com.jeu;
+
 public class Monstre {
     private String nom;
     private int sante;
