@@ -22,12 +22,13 @@ public class Personnage {
         this.objets = new ArrayList<>();
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public String getClasse() {
-        return classe;
+    public void afficherStatistiques() {
+        System.out.println("Nom: " + nom);
+        System.out.println("Classe: " + classe);
+        System.out.println("Force: " + force);
+        System.out.println("Défense: " + defense);
+        System.out.println("Santé: " + sante);
+        System.out.println("Mana: " + mana);
     }
 
     public int getForce() {
@@ -42,39 +43,28 @@ public class Personnage {
         return sante;
     }
 
-    public int getMana() {
-        return mana;
-    }
-
     public void reduireSante(int degats) {
         sante -= degats;
         if (sante < 0) sante = 0;
-    }
-
-    public void ajouterObjet(String objet) {
-        objets.add(objet);
-    }
-
-    public void utiliserObjet() {
-        if (!objets.isEmpty()) {
-            objets.remove(0);
-            System.out.println("Objet utilisé : " + objets.get(0));
-        } else {
-            System.out.println("Aucun objet à utiliser.");
-        }
     }
 
     public void augmenterDefense(int valeur) {
         defense += valeur;
     }
 
-    public void afficherStatistiques() {
-        System.out.println("Nom : " + nom);
-        System.out.println("Classe : " + classe);
-        System.out.println("Force : " + force);
-        System.out.println("Défense : " + defense);
-        System.out.println("Santé : " + sante);
-        System.out.println("Mana : " + mana);
-        System.out.println("Objets : " + objets);
+    public void utiliserObjet() {
+        if (objets.isEmpty()) {
+            System.out.println("Vous n'avez aucun objet à utiliser.");
+            return;
+        }
+
+        String objet = objets.remove(0);
+        System.out.println("Vous utilisez " + objet + " !");
+        // Ajout des effets de l'objet ici
+    }
+
+    public void ajouterObjet(String objet) {
+        objets.add(objet);
+        System.out.println("Vous avez trouvé " + objet + " !");
     }
 }

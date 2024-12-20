@@ -87,14 +87,20 @@ public class Jeu {
         for (int i = 0; i < tailleDonjon; i++) {
             for (int j = 0; j < tailleDonjon; j++) {
                 int evenement = random.nextInt(3); // 0: vide, 1: monstre, 2: trésor
-                donjon[i][j] = new Salle(evenement);
+                if (i == tailleDonjon - 1 && j == tailleDonjon - 1) {
+                    donjon[i][j] = new Salle(3); // 3: sortie
+                } else {
+                    donjon[i][j] = new Salle(evenement);
+                }
             }
         }
-        System.out.println("Le donjon a été généré !");
+        System.out.println("Le donjon a été généré avec une sortie !");
     }
 
     private static void explorerDonjon(Personnage joueur) {
         while (true) {
+            afficherCarte();
+
             System.out.println("\nVous êtes dans la salle [" + positionX + ", " + positionY + "].");
             Salle salleActuelle = donjon[positionX][positionY];
             salleActuelle.afficherEvenement();
@@ -102,6 +108,9 @@ public class Jeu {
             if (salleActuelle.getEvenement() == 1) {
                 Monstre monstre = new Monstre("Gobelin", 50, 8, 3);
                 lancerCombat(joueur, monstre);
+            } else if (salleActuelle.getEvenement() == 3) {
+                System.out.println("Vous avez trouvé la sortie ! Félicitations !");
+                return;
             }
 
             System.out.println("Déplacez-vous : ");
@@ -135,6 +144,34 @@ public class Jeu {
                 default:
                     System.out.println("Choix invalide.");
             }
+        }
+    }
+
+    private static void afficherCarte() {
+        System.out.println("\nCarte du donjon :");
+        for (int i = 0; i < tailleDonjon; i++) {
+            for (int j = 0; j < tailleDonjon; j++) {
+                if (i == positionX && j == positionY) {
+                    System.out.print("[J] ");
+                } else {
+                    Salle salle = donjon[i][j];
+                    switch (salle.getEvenement()) {
+                        case 0:
+                            System.out.print("[ ] ");
+                            break;
+                        case 1:
+                            System.out.print("[M] ");
+                            break;
+                        case 2:
+                            System.out.print("[T] ");
+                            break;
+                        case 3:
+                            System.out.print("[S] ");
+                            break;
+                    }
+                }
+            }
+            System.out.println();
         }
     }
 
